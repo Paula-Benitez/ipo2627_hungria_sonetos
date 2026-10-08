@@ -1,0 +1,42 @@
+:root {
+  /* ── Cromático: COMPLEMENTARIO ─────────────────────────────
+     Índigo (matiz 280°) frente a oro verdoso (matiz 100°).
+     Índigo = tinta/noche (texto, énfasis); oro = luz (guías, foco).
+     light-dark() resuelve tema claro/oscuro sin duplicar tokens. */
+  color-scheme: light dark;
+
+  --c-fondo:         light-dark(oklch(97.5% 0.008 285), oklch(19% 0.05 280));
+  --c-superficie:    light-dark(oklch(99.5% 0.004 285), oklch(24% 0.06 280));
+  --c-texto:         light-dark(oklch(24% 0.06 280),    oklch(94% 0.012 285));
+  --c-texto-suave:   light-dark(oklch(45% 0.05 280),    oklch(77% 0.04 285));
+  --c-primario:      light-dark(oklch(33% 0.13 280),    oklch(84% 0.16 100));
+  --c-sobre-primario:light-dark(oklch(98% 0.01 285),    oklch(20% 0.06 280));
+  --c-acento:        light-dark(oklch(80% 0.17 100),    oklch(84% 0.16 100));
+  --c-acento-texto:  light-dark(oklch(45% 0.10 100),    oklch(84% 0.16 100));
+  --c-borde:         light-dark(oklch(88% 0.02 285),    oklch(36% 0.07 280));
+
+  /* ── Tipográfico: DOS FUENTES CONTRASTADAS ─────────────────
+     Serif de pantalla para lo literario, sans geométrica para la interfaz. */
+  --f-serif: "Spectral", "Iowan Old Style", Georgia, serif;
+  --f-ui:    "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --t-escala: 1;  /* la modifica JS vía CSSOM (A− / A+) */
+  --t-0: 0.875rem;
+  --t-1: 1rem;
+  --t-2: 1.25rem;
+  --t-3: clamp(2rem, 1.4rem + 2.5vw, 3.25rem);
+  --t-verso: calc(clamp(1.15rem, 1rem + 0.6vw, 1.45rem) * var(--t-escala));
+  --t-titulo: calc(clamp(1.6rem, 1.2rem + 1.8vw, 2.4rem) * var(--t-escala));
+  --interlineado-verso: 1.55;
+
+  /* ── Espacial: escala modular en rem ───────────────────── */
+  --esp-1: 0.25rem;
+  --esp-2: 0.5rem;
+  --esp-3: 0.75rem;
+  --esp-4: 1rem;
+  --esp-5: 1.5rem;
+  --esp-6: 2.5rem;
+  --esp-7: 4rem;
+  --ancho-num: 2rem;
+  --radio: 0.375rem;
+}

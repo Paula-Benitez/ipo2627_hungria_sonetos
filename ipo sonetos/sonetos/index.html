@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lector de sonetos clásicos del Siglo de Oro.">
+  <title>Sonetos</title>
+
+  <!-- Tipografías: Spectral (serif, versos y títulos) + Instrument Sans (sans, interfaz) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap">
+
+  <!-- Un único punto de entrada para CSS (capas + @import) y para JS (módulo ES) -->
+  <link rel="stylesheet" href="css/main.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <a class="saltar visually-hidden" href="#lector">Saltar al soneto</a>
+
+  <div class="app">
+    <header class="cabecera">
+      <div>
+        <h1>Sonetos</h1>
+        <p>Elige uno y léelo con calma.</p>
+      </div>
+
+      <div class="ajustes" role="group" aria-label="Ajustes de lectura" data-ajustes>
+        <button class="boton" type="button" data-accion="texto-menor" aria-label="Reducir tamaño del texto">A−</button>
+        <button class="boton" type="button" data-accion="texto-mayor" aria-label="Aumentar tamaño del texto">A+</button>
+        <button class="boton" type="button" data-accion="tema" aria-pressed="false">Modo oscuro</button>
+      </div>
+    </header>
+
+    <nav class="indice" aria-label="Índice de sonetos">
+      <ul class="indice__lista" data-indice></ul>
+    </nav>
+
+    <main class="lector" id="lector" tabindex="-1" data-lector>
+      <p class="aviso">Cargando sonetos…</p>
+      <noscript><p class="aviso" role="alert">Esta página necesita JavaScript.</p></noscript>
+    </main>
+
+    <footer class="pie">
+      <p>Textos de dominio público.</p>
+    </footer>
+  </div>
+
+  <!-- Plantillas inertes: el HTML vive en el HTML, el JS solo las clona y rellena -->
+  <template id="plantilla-indice">
+    <li>
+      <button class="indice__boton" type="button">
+        <span class="indice__titulo" data-campo="titulo"></span>
+        <span class="indice__autor" data-campo="autor"></span>
+      </button>
+    </li>
+  </template>
+
+  <template id="plantilla-soneto">
+    <article class="soneto">
+      <header class="soneto__cabecera">
+        <h2 class="soneto__titulo" data-campo="titulo"></h2>
+        <p class="soneto__autor" data-campo="autor"></p>
+      </header>
+      <div class="soneto__cuerpo" data-campo="estrofas"></div>
+    </article>
+  </template>
+
+  <template id="plantilla-estrofa">
+    <section class="estrofa">
+      <h3 class="visually-hidden"></h3>
+    </section>
+  </template>
+
+  <!-- Aviso si se abre con doble clic (file://): los módulos ES y fetch necesitan un servidor local -->
+  <script>
+    if (location.protocol === "file:") {
+      document.addEventListener("DOMContentLoaded", function () {
+        var main = document.querySelector("[data-lector]");
+        main.innerHTML = '<p class="aviso" role="alert">Estás abriendo el archivo directamente y el navegador bloquea los módulos de JavaScript. Ábrelo con un servidor local: en VS Code, clic derecho en index.html → «Open with Live Server».</p>';
+      });
+    }
+  </script>
+</body>
+</html>

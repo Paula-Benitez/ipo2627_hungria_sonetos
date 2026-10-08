@@ -1,0 +1,27 @@
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+/* El tema manual (data-tema, puesto por JS) fuerza el esquema de color. */
+:root[data-tema="claro"]  { color-scheme: light; }
+:root[data-tema="oscuro"] { color-scheme: dark; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  min-block-size: 100dvh;
+  font-family: var(--f-ui);
+  font-size: var(--t-1);
+  line-height: 1.6;
+  color: var(--c-texto);
+  background: var(--c-fondo);
+}
+
+button { font: inherit; color: inherit; }
+ul { padding: 0; list-style: none; }
+
+:focus-visible {
+  outline: 3px solid var(--c-acento-texto);
+  outline-offset: 3px;
+}

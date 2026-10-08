@@ -1,0 +1,36 @@
+/* Áreas de rejilla con nombre: la estructura se lee de un vistazo. */
+.app {
+  display: grid;
+  grid-template-columns: minmax(14rem, 20rem) minmax(0, 1fr);
+  grid-template-areas:
+    "cabecera cabecera"
+    "indice   lector"
+    "pie      pie";
+  column-gap: var(--esp-7);
+  row-gap: var(--esp-6);
+  max-inline-size: 72rem;
+  margin-inline: auto;
+  padding: var(--esp-6) var(--esp-5);
+}
+
+.cabecera { grid-area: cabecera; }
+.indice   { grid-area: indice; }
+.lector   { grid-area: lector; }
+.pie      { grid-area: pie; }
+
+@media (width >= 52rem) {
+  .indice {
+    position: sticky;
+    inset-block-start: var(--esp-5);
+    align-self: start;
+  }
+}
+
+@media (width < 52rem) {
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "cabecera" "indice" "lector" "pie";
+    row-gap: var(--esp-5);
+    padding: var(--esp-5) var(--esp-4);
+  }
+}

@@ -1,0 +1,197 @@
+/* ── Cabecera y ajustes ─────────────────────────────────── */
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  padding-block-end: var(--esp-4);
+  border-block-end: 1px solid var(--c-borde);
+
+  & h1 {
+    font-family: var(--f-serif);
+    font-size: var(--t-3);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--c-primario);
+  }
+  & p { margin-block-start: var(--esp-2); color: var(--c-texto-suave); }
+}
+
+.ajustes { display: flex; gap: var(--esp-2); }
+
+.boton {
+  min-inline-size: 2.75rem;   /* objetivo táctil cómodo */
+  min-block-size: 2.75rem;
+  padding: var(--esp-2) var(--esp-3);
+  border: 1px solid var(--c-borde);
+  border-radius: var(--radio);
+  background: var(--c-superficie);
+  cursor: pointer;
+
+  &:hover:not(:disabled) { border-color: var(--c-primario); }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+  &[aria-pressed="true"] {
+    background: var(--c-primario);
+    border-color: var(--c-primario);
+    color: var(--c-sobre-primario);
+  }
+}
+
+/* ── Índice ─────────────────────────────────────────────── */
+.indice__lista { display: grid; gap: var(--esp-1); 
+  
+}
+
+
+.indice__boton {
+  display: grid;
+  inline-size: 100%;
+  gap: var(--esp-1);
+  padding: var(--esp-3) var(--esp-4);
+  text-align: start;
+  background: transparent;
+  border: 0;
+  border-inline-start: 0.25rem solid var(--c-borde);
+  border-radius: 0 var(--radio) var(--radio) 0;
+  cursor: pointer;
+
+  &:hover { background: var(--c-superficie); border-inline-start-color: var(--c-primario); }
+
+  &[aria-current="true"] {
+    background: var(--c-primario);
+    color: var(--c-sobre-primario);
+    border-inline-start-color: var(--c-acento);
+  }
+}
+
+.indice__titulo {
+  font-family: var(--f-serif);
+  font-size: var(--t-2);
+  font-weight: 600;
+  line-height: 1.2;
+}
+.indice__autor { font-size: var(--t-0); color: var(--c-texto-suave); }
+.indice__boton[aria-current="true"] .indice__autor { color: inherit; }
+
+@media (width < 52rem) {
+  .indice__lista {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(13rem, 70%);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-block-end: var(--esp-2);
+
+    & > li { scroll-snap-align: start; }
+  }
+}
+
+/* ── Soneto ─────────────────────────────────────────────────
+   Gestalt: continuidad (la guía dorada une las cuatro estrofas),
+   proximidad (versos juntos, estrofas separadas),
+   similitud (todos los versos con el mismo estilo). */
+.lector:focus { outline: none; }
+
+.soneto {
+  counter-reset: verso;
+  padding-inline-start: var(--esp-6);
+  border-inline-start: 0.25rem solid var(--c-acento);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .soneto { animation: aparecer 0.35s ease-out; }
+}
+@keyframes aparecer { from { opacity: 0; } }
+
+.soneto__cabecera { margin-block-end: var(--esp-6); }
+
+.soneto__titulo {
+  font-family: var(--f-serif);
+  font-size: var(--t-titulo);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--c-primario);
+  text-wrap: balance;
+}
+.soneto__autor {
+  margin-block-start: var(--esp-2);
+  font-size: var(--t-1);
+  font-style: italic;
+  color: var(--c-texto-suave);
+}
+
+.estrofa {
+  display: grid;
+  gap: var(--esp-1);
+  max-inline-size: 38em;
+  padding-inline-start: calc(var(--ancho-num) + var(--esp-2));
+
+  & + & { margin-block-start: var(--esp-5); }
+
+  /* Frontera entre cuartetos y tercetos: más aire y una línea fina. */
+  &[data-tipo="cuarteto"] + &[data-tipo="terceto"] {
+    margin-block-start: var(--esp-6);
+    padding-block-start: var(--esp-5);
+    border-block-start: 1px solid var(--c-borde);
+  }
+}
+
+.verso {
+  position: relative;
+  padding-inline-start: 1.5em;   /* sangría francesa si el verso se parte */
+  text-indent: -1.5em;
+  font-family: var(--f-serif);
+  font-size: var(--t-verso);
+  line-height: var(--interlineado-verso);
+  counter-increment: verso;
+  text-wrap: pretty;
+
+  &::before {
+    content: counter(verso);
+    content: counter(verso) / "";   /* oculto a lectores de pantalla */
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: calc(-1 * (var(--ancho-num) + var(--esp-2)) );
+    inline-size: var(--ancho-num);
+    block-size: calc(var(--t-verso) * var(--interlineado-verso));
+    display: grid;
+    place-items: center end;
+    text-indent: 0;
+    font-family: var(--f-ui);
+    font-size: var(--t-0);
+    color: var(--c-acento-texto);
+  }
+}
+
+@media (width < 40rem) {
+  .soneto { padding-inline-start: var(--esp-4); }
+  .estrofa { padding-inline-start: 0; }
+  .verso::before { display: none; }
+}
+
+/* ── Avisos y pie ───────────────────────────────────────── */
+.aviso { color: var(--c-texto-suave); }
+.aviso[role="alert"] { color: var(--c-primario); font-weight: 600; }
+
+.pie { color: var(--c-texto-suave); font-size: var(--t-0); }
+
+/* ── Utilidades ─────────────────────────────────────────── */
+@layer utilities {
+  .visually-hidden:not(:focus, :focus-within) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .saltar:focus {
+    position: fixed;
+    inset: var(--esp-3) auto auto var(--esp-3);
+    z-index: 10;
+    padding: var(--esp-2) var(--esp-4);
+    background: var(--c-primario);
+    color: var(--c-sobre-primario);
+    border-radius: var(--radio);
+  }
+}

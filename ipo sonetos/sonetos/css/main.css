@@ -1,0 +1,8 @@
+/* Punto de entrada: fija el orden de las capas y las importa.
+   Una capa posterior siempre gana a una anterior, sin guerras de especificidad. */
+@layer tokens, base, layout, components, utilities;
+
+@import url("tokens.css") layer(tokens);
+@import url("base.css") layer(base);
+@import url("layout.css") layer(layout);
+@import url("components.css") layer(components);
